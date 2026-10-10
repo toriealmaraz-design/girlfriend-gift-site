@@ -11,30 +11,23 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
 
   <main class="wrap">
 
     <nav class="wrap nav" aria-label="Page navigation">
-      <a href="index.html">← Back to the intro</a>
+      <a href="index.html">&larr; Back to the intro</a>
     </nav>
 
     <section class="page-head">
       <p class="eyebrow">The Videos</p>
-      <h1>Everything we've said, in one place.</h1>
-      <p class="intro-sub">A short film of you — I'll add the clips.</p>
+      <h1>Everything we&rsquo;ve said, in one place.</h1>
+      <p class="intro-sub">A short film of you &mdash; I&rsquo;ll add the clips.</p>
     </section>
 
     <div class="video-player wrap">
       <div class="video-row reveal" data-delay="1">
-        <!-- Video 1 — real MP4 goes here. Client drops the file into
-           assets/ (or points this to a hosted URL); thumbnails show in
-           the meantime. For the first draft, the placeholder frame
-           (assets/placeholder-video-N.jpg) is shown until the MP4 drops
-           in. Each card is a single drop-in swap. -->
         <video class="video-card" poster="assets/placeholder-video-1.jpg" preload="metadata" playsinline controls>
           <source src="assets/placeholder-video-1.mp4" type="video/mp4" />
-          <!-- Fallback (first draft): show the thumbnail while the MP4 is being uploaded -->
           <source src="assets/placeholder-video-1.jpg" type="image/jpeg" />
           Your browser does not support the video tag.
         </video>

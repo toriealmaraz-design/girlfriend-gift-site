@@ -52,7 +52,6 @@
   // ── 3. Gallery carousel: native scroll-snap, drag-aware ──
   const grid = document.querySelector(".gallery-grid");
   if (grid) {
-    grid.style.scrollSnapType = "x mandatory";
     grid.style.display = "grid";
     grid.style.gridTemplateColumns = "repeat(auto-fill, minmax(250px, 1fr))";
     const cards = Array.from(grid.querySelectorAll(".photo-card"));
@@ -73,7 +72,7 @@
         cap.querySelector("span")?.setAttribute("style", "color: var(--taupe); font-size: 0.85rem;");
       }
     });
-    // subtle parallax: cards slightly lift while scrolling
+    // subtle parallax on scroll
     let ticking = false;
     let lastY = 0;
     window.addEventListener("scroll", () => {
