@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday — A Private Gift</title>
+  <meta name="description" content="A private birthday gift website." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="wrap">
+
+    <!-- ═══ INTRO ═══ -->
+    <section class="intro" id="top">
+      <div class="paper-section reveal" data-delay="1">
+        <p class="eyebrow">Happy Birthday</p>
+        <h1>To the one who makes the ordinary feel like home.</h1>
+        <p class="opening-note">Some days you just want someone to look at you and see everything you are.</p>
+        <p class="opening-note">This page is mine. All of it.</p>
+      </div>
+
+      <!-- Envelope / letter CTA -->
+      <div class="envelope reveal" data-delay="2">
+        <p class="envelope-label">📜 A letter, just for you</p>
+        <p class="envelope-copy">Open it when you're ready. There are things in here I never found the words to say out loud.</p>
+        <button class="btn" id="openLetter">Open the letter</button>
+      </div>
+    </section>
+
+    <!-- Navigation (multi-page) -->
+    <nav class="wrap nav" aria-label="Multi-page navigation">
+      <a href="index.html" class="nav-brand">gift</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Intro</a></li>
+        <li><a href="letter.html">Letter</a></li>
+        <li><a href="questions.html">Questions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="videos.html">Videos</a></li>
+        <li><a href="song.html">Song</a></li>
+      </ul>
+    </nav>
+
+    <footer class="wrap footer">
+      <p>This page is private. Please don't share it.</p>
+      <p>Made with care — every photo, every note.</p>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

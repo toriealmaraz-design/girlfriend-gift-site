@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Videos — Happy Birthday</title>
+  <meta name="description" content="Our moments, in video." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <main class="wrap">
+
+    <nav class="wrap nav" aria-label="Page navigation">
+      <a href="index.html">← Back to the intro</a>
+    </nav>
+
+    <section class="page-head">
+      <p class="eyebrow">The Videos</p>
+      <h1>Everything we've said, in one place.</h1>
+      <p class="intro-sub">A short film of you — I'll add the clips.</p>
+    </section>
+
+    <div class="video-player wrap">
+      <div class="video-row reveal" data-delay="1">
+        <!-- Video 1 — real MP4 goes here. Client drops the file into
+           assets/ (or points this to a hosted URL); thumbnails show in
+           the meantime. For the first draft, the placeholder frame
+           (assets/placeholder-video-N.jpg) is shown until the MP4 drops
+           in. Each card is a single drop-in swap. -->
+        <video class="video-card" poster="assets/placeholder-video-1.jpg" preload="metadata" playsinline controls>
+          <source src="assets/placeholder-video-1.mp4" type="video/mp4" />
+          <!-- Fallback (first draft): show the thumbnail while the MP4 is being uploaded -->
+          <source src="assets/placeholder-video-1.jpg" type="image/jpeg" />
+          Your browser does not support the video tag.
+        </video>
+        <p class="video-cap">Video 1 &middot; [[Title]]</p>
+      </div>
+
+      <div class="video-row reveal" data-delay="2">
+        <video class="video-card" poster="assets/placeholder-video-2.jpg" preload="metadata" playsinline controls>
+          <source src="assets/placeholder-video-2.mp4" type="video/mp4" />
+          <source src="assets/placeholder-video-2.jpg" type="image/jpeg" />
+          Your browser does not support the video tag.
+        </video>
+        <p class="video-cap">Video 2 &middot; [[Title]]</p>
+      </div>
+
+      <div class="video-row reveal" data-delay="3">
+        <video class="video-card" poster="assets/placeholder-video-3.jpg" preload="metadata" playsinline controls>
+          <source src="assets/placeholder-video-3.mp4" type="video/mp4" />
+          <source src="assets/placeholder-video-3.jpg" type="image/jpeg" />
+          Your browser does not support the video tag.
+        </video>
+        <p class="video-cap">Video 3 &middot; [[Title]]</p>
+      </div>
+    </div>
+
+    <footer class="wrap footer">
+      <p>Your videos will live here &mdash; private, just for you.</p>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
