@@ -1,10 +1,10 @@
-<!--
-  Birthday Gift Site — Warm, Romantic Design System
-  Parchment paper + deep rose + soft gold. Painterly warmth, airy
-  negative space, and a layered, gentle-movement motion language.
--->
+// Birthday Gift Site — Refined Design System v2
+// Reference: cattpine (polished, "SO CUTEEE"), yepaauoii (pink theme + music embed)
+// Parchment paper + deep rose + soft gold. Elevating the motion to be
+// premium, not playful. The gift is presented as an unboxing of elegance.
+
 :root {
-  /* ─── Palette (romantic warm) ─── */
+  /* ─── Palette (romantic warm, premium) ─── */
   --paper:       #F7F2E9;   /* warm parchment */
   --paper-soft:  #FAF6EE;   /* card surface */
   --paper-card:  #EFE5D6;   /* deeper parchment for text-on-parchment */
@@ -13,6 +13,7 @@
   --rose:        #7B2D43;   /* primary — deep rose */
   --rose-deep:   #5C1D2E;   /* deeper rose for hover/strong */
   --rose-soft:   #A85A6E;   /* mid rose for eyebrow/cues */
+  --rose-glow:   #E8C9D8;   /* rose tint for glows/borders */
   --gold:        #C9A227;   /* secondary — soft gold */
   --gold-soft:   #E3B06A;   /* lighter gold for glows */
   --taupe:       #8A7A70;   /* muted text & borders */
@@ -24,7 +25,7 @@
   --font-serif:  "Playfair Display", "Georgia", serif;
   --font-sans:   "Source Sans 3", "Inter", "Helvetica Neue", sans-serif;
 
-  /* ─── Spacing scale ─── */
+  /* ─── Spacing scale (looser, premium) ─── */
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
@@ -34,18 +35,22 @@
   --space-8: 4rem;
   --space-10: 5rem;
   --space-12: 6rem;
+  --space-16: 8rem;
 
   /* ─── Layout ─── */
-  --max-width: 1120px;
-  --radius: 10px;
+  --max-width: 1100px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-full: 9999px;
 
   /* ─── Motion ─── */
   --ease-soft: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-slow: 1s;
-  --duration-soft: 0.6s;
-  --duration-faster: 0.3s;
-  --reveal-distance: 22px;
+  --duration-slow: 1.2s;
+  --duration-soft: 0.7s;
+  --duration-faster: 0.35s;
+  --reveal-distance: 28px;
+  --sparkle-size: 4px;
 }
 
 * { box-sizing: border-box; }
@@ -57,7 +62,7 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1rem;
-  line-height: 1.75;
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   margin: 0;
@@ -72,7 +77,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
+  opacity: 0.045;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 120px 120px;
@@ -81,8 +86,8 @@ body::after {
 /* ─── Decorative floating sparkles (pure CSS) ─── */
 .sparkle {
   position: fixed;
-  width: 4px;
-  height: 4px;
+  width: var(--sparkle-size);
+  height: var(--sparkle-size);
   background: var(--gold);
   border-radius: 50%;
   pointer-events: none;
@@ -102,12 +107,11 @@ p  { margin: 0 0 var(--space-2); }
 a  { color: var(--rose); text-decoration: none; }
 strong { color: var(--ink); }
 em { font-style: italic; }
-
 ::selection { background: var(--rose); color: var(--paper); }
 
 /* ─── Layout helpers ─── */
 .wrap { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-4); }
-.section { padding: var(--space-10) 0; border-bottom: 1px solid var(--line-soft); }
+.section { padding: var(--space-12) 0; border-bottom: 1px solid var(--line-soft); }
 .section:last-of-type { border-bottom: none; }
 
 /* ─── Animated reveal (scroll) ─── */
@@ -126,6 +130,7 @@ em { font-style: italic; }
 .reveal[data-delay="3"] { transition-delay: 0.3s; }
 .reveal[data-delay="4"] { transition-delay: 0.4s; }
 .reveal[data-delay="5"] { transition-delay: 0.5s; }
+.reveal[data-delay="6"] { transition-delay: 0.6s; }
 
 /* ─── Navigation ─── */
 .nav {
@@ -164,7 +169,7 @@ em { font-style: italic; }
 
 /* ─── Footer ─── */
 .footer {
-  margin-top: var(--space-8);
+  margin-top: var(--space-10);
   padding-top: var(--space-4);
   border-top: 1px solid var(--line);
   text-align: center;
@@ -173,23 +178,11 @@ em { font-style: italic; }
 }
 .footer p { margin: var(--space-1) 0; }
 
-/* ─── Page head ─── */
-.page-head { text-align: center; padding: var(--space-4) 0 var(--space-6); }
-.page-head .eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--rose);
-}
-.page-head h1 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); margin-bottom: var(--space-2); }
-.intro-sub { max-width: 520px; margin: 0 auto; color: var(--taupe); }
-
 /* ═══════════════════════════════
    INTRO (index.html)
    ═════════════════════════════== */
 .intro {
-  padding: var(--space-12) 0 var(--space-8);
+  padding: var(--space-16) 0 var(--space-10);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -200,7 +193,7 @@ em { font-style: italic; }
   inset: 0 0 auto 50%;
   width: 240px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold));
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
   transform: translateX(-50%);
 }
 .intro .eyebrow {
@@ -219,7 +212,7 @@ em { font-style: italic; }
 }
 .intro .opening-note + .opening-note { margin-top: var(--space-2); }
 
-/* ─── Envelope / letter CTA ─── */
+/* ─── Gift envelope / letter CTA ─── */
 .envelope {
   display: inline-flex;
   flex-direction: column;
@@ -453,10 +446,7 @@ em { font-style: italic; }
 }
 .song-block .song-meta .dash { margin: 0 var(--space-2); color: var(--taupe); }
 .song-block .song-sub { color: var(--taupe); font-style: italic; margin-bottom: var(--space-6); }
-.song-block .song-sub em {
-  font-style: italic;
-  color: var(--rose-deep);
-}
+.song-block .song-sub em { font-style: italic; color: var(--rose-deep); }
 .embed-cue {
   background: var(--paper-soft);
   border: 1px dashed var(--line);
@@ -470,6 +460,7 @@ em { font-style: italic; }
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 8px 28px rgba(60,30,20,0.14);
+  margin: var(--space-3) 0;
 }
 
 /* ═══════════════════════════════
@@ -547,4 +538,12 @@ em { font-style: italic; }
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* ─── Decorative border ornaments ─── */
+.ornament {
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  margin: var(--space-2) 0;
 }
