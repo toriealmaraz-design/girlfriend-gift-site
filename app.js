@@ -163,19 +163,4 @@
     ];
     document.body.appendChild(s);
   }
-
-  // ── 7. Song player: no extra logic — the YouTube embed handles playback.
-  //     The "Direct link" below the player is the shareable, permanent address.
-
-  // ── 8. Keyboard: arrow navigation inside the gallery carousel ──
-  const galleries = Array.from(document.querySelectorAll(".gallery-grid"));
-  galleries.forEach((g) => {
-    g.setAttribute("tabindex", "0");
-    g.setAttribute("role", "list");
-    g.setAttribute("aria-label", "Photo gallery you can scroll");
-  });
-
-  // ── 9. Graceful fallbacks: missing media stays pretty, no console errors. ──
-
-  console.log("🎂 Birthday gift site loaded. Scroll, swipe, play.");
 })();

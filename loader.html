@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday — Let's Start</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── LOADER ── */
+    .loader-page {
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, #2A1A1E 0%, #1A0F14 55%, #0E080C 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      color: #F7F2E9;
+    }
+    /* warm glow wrap */
+    .loader-page::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 50% 50%, rgba(184,120,140,0.22), transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 30%, rgba(201,162,39,0.14), transparent 50%),
+        radial-gradient(ellipse 40% 30% at 20% 65%, rgba(123,45,67,0.18), transparent 50%);
+      pointer-events: none;
+    }
+    /* sparkle particles */
+    .sparkles {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .sparkles span {
+      position: absolute;
+      width: 5px; height: 5px;
+      background: #E8C9D8;
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px rgba(200,160,170,0.5);
+      animation: sparkle-fall linear infinite;
+    }
+    @keyframes sparkle-fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .sparkle-slow { animation-duration: 4s; }
+    .sparkle-faster { animation-duration: 2.4s; }
+    .sparkle-richer { width: 4px; height: 4px; }
+
+    /* ── Candle + Cake field ── */
+    .cake-field {
+      position: relative;
+      width: 100%;
+      max-width: 760px;
+      aspect-ratio: 16 / 9;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      position: relative;
+      overflow: hidden;
+    }
+    .cake-field::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 100%, rgba(184,120,140,0.10), transparent 60%),
+        repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.012) 20px, rgba(255,255,255,0.012) 21px);
+      pointer-events: none;
+    }
+    /* floating musical note motif */
+    .note {
+      font-size: 2rem;
+      position: absolute;
+      opacity: 0.08;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ── Candles (growing as you wait) ── */
+    .candles { position: relative; display: flex; gap: 14px; align-items: flex-end; padding-bottom: 20px; }
+    .candle {
+      position: relative;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 30%, #F0E6DA, #C9A227 70%, #8A6A1E);
+      box-shadow:
+        0 0 0 3px rgba(201,162,39,0.25),
+        0 0 0 6px rgba(201,162,39,0.10),
+        0 8px 18px rgba(0,0,0,0.35),
+        inset 0 -2px 6px rgba(0,0,0,0.35);
+      transition: transform 0.25s var(--ease-soft);
+    }
+    .candle::after {
+      content: "";
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 12px; height: 4px;
+      background: rgba(255,255,255,0.28);
+      border-radius: 2px;
+    }
+    .candle .flame {
+      position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 18px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      background: radial-gradient(ellipse 14px 20px, #FF6B35, #FFB84D 40%, #F6C453 70%, transparent 85%) !important;
+      box-shadow: 0 0 10px 3px rgba(255,150,60,0.55), 0 0 22px 6px rgba(255,180,80,0.30);
+      animation: flame-flicker 0.6s var(--ease-bouncy) infinite;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .candle .flame::before {
+      content: "";
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      width: 22px; height: 6px;
+      background: rgba(255,255,255,0.35);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+    @keyframes flame-flicker {
+      0%, 100% { transform: translateX(-50%) translateY(0) scaleX(1); opacity: 1; }
+      25%      { transform: translateX(-50%) translateY(-3px) scaleX(0.92); opacity: 0.9; }
+      50%      { transform: translateX(-50%) translateY(2px) scaleX(1.06); opacity: 0.95; }
+      75%      { transform: translateX(-50%) translateY(-1px) scaleX(0.96); opacity: 0.9; }
+    }
+    .candle.glow-1 { animation-delay: 0s; }
+    .candle.glow-2 { animation-delay: 0.14s; }
+    .candle.glow-3 { animation-delay: 0.28s; }
+    .candle.glow-4 { animation-delay: 0.10s; }
+    .candle.glow-5 { animation-delay: 0.22s; }
+
+    /* open state: flames flare + candles tilt */
+    .candles.open .candle {
+      transform: translateY(-8px) scale(1.04);
+    }
+    .candles.open .candle .flame {
+      animation: flame-flicker-open 0.45s var(--ease-bouncy) infinite;
+      opacity: 1;
+    }
+    @keyframes flame-flicker-open {
+      0%, 100% { transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1); opacity: 1; }
+      20%      { transform: translateX(-50%) translateY(-8px) scaleX(1.1) scaleY(1.12); opacity: 0.8; }
+      60%      { transform: translateX(-50%) translateY(-12px) scaleX(0.95) scaleY(0.92); opacity: 0.6; }
+      85%      { transform: translateX(-50%) translateY(-6px) scaleX(1.04) scaleY(1.04); opacity: 0.9; }
+    }
+    .candles.open .candle::after { background: rgba(255,255,255,0.5); }
+
+    /* ── Big "Happy Birthday" ── */
+    .hb-title {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 var(--space-4);
+      pointer-events: none;
+    }
+    .hb-title h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #F7F2E9;
+      text-shadow: 0 2px 14px rgba(255,255,255,0.14);
+    }
+    .hb-title .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #E8C9D8;
+      margin-bottom: var(--space-2);
+    }
+    .hb-title .sub {
+      font-size: 1.05rem;
+      color: #C9A227;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ── Tap overlay ── */
+    .tap-overlay {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      padding: var(--space-4);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--duration-slow) var(--ease-soft);
+    }
+    .tap-overlay.show { opacity: 1; }
+    .tap-overlay p {
+      font-size: 1.1rem;
+      color: #F7F2E9;
+      font-style: italic;
+    }
+    .tap-overlay .hint {
+      font-size: 0.8rem;
+      color: #A85A6E;
+      margin-top: var(--space-2);
+    }
+    .tap-overlay .tap-btn {
+      display: inline-block;
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-5);
+      border: 2px solid var(--rose);
+      border-radius: var(--radius-full);
+      color: var(--rose);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: transform var(--duration-soft) var(--ease-soft), background var(--duration-soft) var(--ease-soft);
+      background: rgba(123,45,67,0.12);
+      pointer-events: auto;
+    }
+    .tap-overlay .tap-btn:hover { transform: scale(1.06); background: rgba(123,45,67,0.20); }
+    .tap-overlay .tap-btn:active { transform: scale(0.97); }
+
+    /* ── Music note floating ── */
+    .music-note {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 3;
+      font-size: 1.8rem;
+      opacity: 0.25;
+      animation: float-up 4s var(--ease-bouncy) infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+    @keyframes float-up {
+      0%   { transform: translateY(0); opacity: 0.25; }
+      50%  { transform: translateY(-22px); opacity: 0.35; }
+      100% { transform: translateY(0); opacity: 0.25; }
+    }
+
+    /* ── Hidden audio (plays before the page) ── */
+    .audio-preload {
+      position: absolute;
+      width: 0;
+      height: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── silent audio, autoplay while loading (ads hear-free, actually MP3) ─── -->
+<audio id="gift-music" class="audio-preload" loop>
+  <source src="assets/song/adore-you.mp3" type="audio/mpeg">
+</audio>
+
+<div class="loader-page" id="loaderPage">
+  <!-- sparkles -->
+  <div class="sparkles" id="sparkles"></div>
+
+  <div class="cake-field">
+    <div class="note" style="top:18%;">🎵</div>
+    <div class="note" style="bottom:34%; right:12%;">🎶</div>
+    <div class="note" style="top:62%; right:18%;">🎵</div>
+
+    <div class="candles" id="candles">
+      <div class="candle glow-1"><div class="flame"></div></div>
+      <div class="candle glow-2"><div class="flame"></div></div>
+      <div class="candle glow-3"><div class="flame"></div></div>
+      <div class="candle glow-4"><div class="flame"></div></div>
+      <div class="candle glow-5"><div class="flame"></div></div>
+    </div>
+  </div>
+
+  <div class="hb-title">
+    <p class="eyebrow">Happy Birthday</p>
+    <h1>Let's begin.</h1>
+    <p class="sub">Your music is already playing.</p>
+  </div>
+
+  <div class="tap-overlay" id="tapOverlay">
+    <p>Tap the cake — blow out the candles.</p>
+    <p class="hint">The song is covered by the real music.</p>
+    <button class="tap-btn" id="tapBtn">Begin</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    "use strict";
+
+    var page = document.getElementById("loaderPage");
+    var candles = document.getElementById("candles");
+    var tapBtn = document.getElementById("tapBtn");
+    var tapOverlay = document.getElementById("tapOverlay");
+    var sparklesEl = document.getElementById("sparkles");
+    var audio = document.getElementById("gift-music");
+
+    // ── Build sparkles ──
+    function buildSparkles() {
+      for (var i = 0; i < 30; i++) {
+        var s = document.createElement("span");
+        var size = Math.random() * 4 + 2;
+        s.style.width = s.style.height = size + "px";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.animationDuration = (Math.random() * 2.5 + 1.5) + "s";
+        s.style.animationDelay = (Math.random() * 3) + "s";
+        s.style.opacity = Math.random() * 0.35 + 0.1;
+        sparklesEl.appendChild(s);
+      }
+    }
+    buildSparkles();
+
+    // ── Start music immediately ──
+    // autoplay: most browsers allow it now with a hidden audio element
+    audio.volume = 0.7;
+    audio.play().catch(function () {});
+
+    // ── Click / tap to blow out the candles ──
+    function onBegin() {
+      // flare the flames (open state)
+      candles.classList.add("open");
+
+      // flash the page slightly + burst of white
+      page.style.transition = "background 0.25s";
+      page.style.background = "radial-gradient(ellipse 80% 60% at 50% 40%, #2A1A1E 0%, #1A0F14 55%, #0E080C 100%);";
+
+      // sparkle burst
+      var spans = sparklesEl.querySelectorAll("span");
+      spans.forEach(function (s) { s.style.opacity = "0.2"; });
+
+      setTimeout(function () {
+        candles.classList.remove("open");
+        // fade out the whole loader
+        page.style.transition = "opacity 0.8s var(--ease-soft), visibility 0s 0.8s";
+        page.style.opacity = "0";
+        setTimeout(function () {
+          window.location.href = "index.html";
+        }, 800);
+      }, 1600);
+    }
+
+    tapBtn.addEventListener("click", onBegin);
+
+    // also tap anywhere on the canvas
+    page.addEventListener("click", onBegin);
+    page.addEventListener("touchstart", onBegin);
+
+    // keyboard
+    document.addEventListener("keydown", function (e) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); onBegin(); }
+    });
+  })();
+</script>
+</body>
+</html>
