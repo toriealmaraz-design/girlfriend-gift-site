@@ -10,31 +10,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .loader {
-      position: fixed;
-      inset: 0;
-      z-index: 2100;
+    .loader-page {
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, #2A1A1E 0%, #1A0F14 55%, #0E080C 100%);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(ellipse 80% 60% at 50% 40%, #2A1A1E 0%, #1A0F14 55%, #0E080C 100%);
-      color: #F7F2E9;
-      text-align: center;
+      position: relative;
       overflow: hidden;
-      pointer-events: none;
+      color: #F7F2E9;
     }
-    .loader::before {
+    .loader-page::before {
       content: "";
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 60% 70% at 50% 50%, rgba(184,120,140,0.20), transparent 60%),
+        radial-gradient(ellipse 60% 70% at 50% 50%, rgba(184,120,140,0.22), transparent 60%),
         radial-gradient(ellipse 40% 30% at 80% 30%, rgba(201,162,39,0.14), transparent 50%),
         radial-gradient(ellipse 40% 30% at 20% 65%, rgba(123,45,67,0.18), transparent 50%);
       pointer-events: none;
     }
-    .loader__sparkles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .loader__sparkles span {
+    .loader-page__sparkles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+    .loader-page__sparkles span {
       position: absolute; width: 4px; height: 4px; background: #E8C9D8; border-radius: 50%;
       box-shadow: 0 0 5px 2px rgba(200,160,170,0.45); animation: sparkle-fall linear infinite;
     }
@@ -42,178 +39,168 @@
       0%   { transform: translateY(-18px) rotate(0deg); opacity: 0; }
       10%  { opacity: 1; } 90%  { opacity: 1; } 100% { transform: translateY(115vh) rotate(720deg); opacity: 0; }
     }
-    .loader__candles { position: relative; display: flex; gap: 14px; align-items: flex-end; padding-bottom: 20px; z-index: 2; }
-    .loader__candle {
-      position: relative; width: 44px; height: 44px; border-radius: 50%;
-      background: radial-gradient(circle at 50% 30%, #F0E6DA, #C9A227 70%, #8A6A1E);
-      box-shadow: 0 0 0 3px rgba(201,162,39,0.25), 0 0 0 6px rgba(201,162,39,0.10), 0 8px 18px rgba(0,0,0,0.35), inset 0 -2px 6px rgba(0,0,0,0.35);
-      transition: transform 0.25s var(--ease-soft);
+    .loader-page__sparkles span.slow   { animation-duration: 4s; }
+    .loader-page__sparkles span.fast  { animation-duration: 2.4s; }
+    .loader-page__sparkles span.big   { width: 8px; height: 8px; }
+    .loader-page__sparkles span.huge  { width: 12px; height: 12px; }
+
+    .loader-page__lottie {
+      width: 400px; height: 400px;
+      margin-bottom: var(--space-6);
+      position: relative; z-index: 2;
     }
-    .loader__candle::after {
-      content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 12px; height: 4px; background: rgba(255,255,255,0.28); border-radius: 2px;
-    }
-    .loader__flame {
-      position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
-      width: 16px; height: 18px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      background: radial-gradient(ellipse 14px 20px, #FF6B35, #FFB84D 40%, #F6C453 70%, transparent 85%) !important;
-      box-shadow: 0 0 10px 3px rgba(255,150,60,0.55), 0 0 22px 6px rgba(255,180,80,0.30);
-      animation: flame-flicker 0.6s var(--ease-bouncy) infinite; z-index: 3; pointer-events: none;
-    }
-    .loader__flame::before {
-      content: ""; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      width: 22px; height: 6px; background: rgba(255,255,255,0.35); border-radius: 50%; filter: blur(2px);
-    }
-    @keyframes flame-flicker {
-      0%,100% { transform: translateX(-50%) translateY(0) scaleX(1); opacity: 1; }
-      25%     { transform: translateX(-50%) translateY(-3px) scaleX(0.92); opacity: 0.9; }
-      50%     { transform: translateX(-50%) translateY(2px) scaleX(1.06); opacity: 0.95; }
-      75%     { transform: translateX(-50%) translateY(-1px) scaleX(0.96); opacity: 0.9; }
-    }
-    .loader__candle.glow-1 { animation-delay: 0s; }
-    .loader__candle.glow-2 { animation-delay: 0.14s; }
-    .loader__candle.glow-3 { animation-delay: 0.28s; }
-    .loader__candle.glow-4 { animation-delay: 0.10s; }
-    .loader__candle.glow-5 { animation-delay: 0.22s; }
-    .loader__candles.open .loader__candle { transform: translateY(-8px) scale(1.04); }
-    .loader__candles.open .loader__flame { animation: flame-flicker-open 0.45s var(--ease-bouncy) infinite; opacity: 1; }
-    @keyframes flame-flicker-open {
-      0%,100% { transform: translateX(-50%) translateY(0) scaleX(1) scaleY(1); opacity: 1; }
-      20%     { transform: translateX(-50%) translateY(-8px) scaleX(1.1) scaleY(1.12); opacity: 0.8; }
-      60%     { transform: translateX(-50%) translateY(-12px) scaleX(0.95) scaleY(0.92); opacity: 0.6; }
-      85%     { transform: translateX(-50%) translateY(-6px) scaleX(1.04) scaleY(1.04); opacity: 0.9; }
-    }
-    .loader__title { position: relative; z-index: 2; text-align: center; padding: 0 var(--space-4); pointer-events: none; }
-    .loader__title h1 {
-      font-family: var(--font-serif); font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 600;
+    @media (max-width: 500px) { .loader-page__lottie { width: 280px; height: 280px; } }
+
+    .loader-page__music { position: fixed; bottom: 24px; left: 24px; z-index: 3; font-size: 1.8rem; opacity: 0.25; animation: float-up 4s var(--ease-bouncy) infinite; pointer-events: none; user-select: none; }
+    @keyframes float-up { 0% { transform: translateY(0); opacity: 0.25; } 50% { transform: translateY(-22px); opacity: 0.35; } 100% { transform: translateY(0); opacity: 0.25; } }
+
+    .loader-page__title { position: relative; z-index: 2; text-align: center; padding: 0 var(--space-4); pointer-events: none; }
+    .loader-page__title h1 {
+      font-family: var(--font-serif); font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 600;
       letter-spacing: 0.02em; color: #F7F2E9; text-shadow: 0 2px 14px rgba(255,255,255,0.14);
     }
-    .loader__eyebrow {
+    .loader-page__subtitle {
       text-transform: uppercase; letter-spacing: 0.24em; font-size: 0.75rem; font-weight: 600;
-      color: #E8C9D8; margin-bottom: var(--space-2);
+      color: #E8C9D8; margin-top: var(--space-2);
     }
-    .loader__sub { font-size: 1.05rem; color: #E3B06A; font-style: italic; font-weight: 400; }
-    .loader__overlay {
+    .loader-page__subline { font-size: 1.05rem; color: #E3B06A; font-style: italic; font-weight: 400; }
+
+    .loader-page__overlay {
       position: relative; z-index: 4; text-align: center; padding: var(--space-4);
       pointer-events: none; opacity: 0; transition: opacity var(--duration-slow) var(--ease-soft);
     }
-    .loader__overlay.show { opacity: 1; }
-    .loader__overlay p { font-size: 1.1rem; color: #F7F2E9; font-style: italic; }
-    .loader__overlay .hint { font-size: 0.8rem; color: #A85A6E; margin-top: var(--space-2); }
-    .loader__btn {
+    .loader-page__overlay.show { opacity: 1; }
+    .loader-page__overlay p { font-size: 1.1rem; color: #F7F2E9; font-style: italic; }
+    .loader-page__overlay .hint { font-size: 0.8rem; color: #A85A6E; margin-top: var(--space-2); }
+    .loader-page__btn {
       display: inline-block; margin-top: var(--space-3); padding: var(--space-3) var(--space-5);
       border: 2px solid var(--rose); border-radius: var(--radius-full); color: var(--rose);
       font-weight: 600; letter-spacing: 0.06em; cursor: pointer;
       transition: transform var(--duration-soft) var(--ease-soft), background var(--duration-soft) var(--ease-soft);
       background: rgba(123,45,67,0.12); pointer-events: auto;
     }
-    .loader__btn:hover { transform: scale(1.06); background: rgba(123,45,67,0.20); }
-    .loader__btn:active { transform: scale(0.97); }
-    .loader__music { position: fixed; bottom: 24px; left: 24px; z-index: 3; font-size: 1.8rem; opacity: 0.25; animation: float-up 4s var(--ease-bouncy) infinite; pointer-events: none; user-select: none; }
-    @keyframes float-up { 0% { transform: translateY(0); opacity: 0.25; } 50% { transform: translateY(-22px); opacity: 0.35; } 100% { transform: translateY(0); opacity: 0.25; } }
-    .loader.hidden { opacity: 0; transition: opacity 0.8s var(--ease-soft); }
+    .loader-page__btn:hover { transform: scale(1.06); background: rgba(123,45,67,0.20); }
+    .loader-page__btn:active { transform: scale(0.97); }
+    .loader-page.hidden { opacity: 0; pointer-events: none; transition: opacity 0.8s var(--ease-soft); }
   </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-  <div class="loader__sparkles" id="sparkles"></div>
-  <div class="loader__music">&#9835;</div>
-  <div class="loader__candles" id="candles">
-    <div class="loader__candle glow-1"><div class="loader__flame"></div></div>
-    <div class="loader__candle glow-2"><div class="loader__flame"></div></div>
-    <div class="loader__candle glow-3"><div class="loader__flame"></div></div>
-    <div class="loader__candle glow-4"><div class="loader__flame"></div></div>
-    <div class="loader__candle glow-5"><div class="loader__flame"></div></div>
-  </div>
-  <div class="loader__title">
-    <p class="loader__eyebrow">Happy Birthday</p>
+<div class="loader-page" id="loaderPage">
+  <div class="loader-page__sparkles" id="sparkles"></div>
+  <div class="loader-page__music">&#9835;</div>
+
+  <div class="loader-page__lottie" id="lottieContainer"></div>
+
+  <div class="loader-page__title">
+    <p class="loader-page__subtitle">Happy Birthday</p>
     <h1>Let's begin.</h1>
-    <p class="loader__sub">Your music is already playing.</p>
+    <p class="loader-page__subline">Your music is already playing.</p>
   </div>
-  <div class="loader__overlay" id="overlay">
-    <p>Tap the cake - blow out the candles.</p>
+
+  <div class="loader-page__overlay" id="overlay">
+    <p>Tap the cakes — blow out the candles.</p>
     <p class="hint">The song is covered by the real music.</p>
-    <button class="loader__btn" id="blowBtn">Blow out the candles</button>
+    <button class="loader-page__btn" id="blowBtn">Blow out the candles</button>
   </div>
 </div>
 
-<audio id="giftMusic" preload="auto">
+<audio id="giftMusic" preload="auto" loop>
   <source src="assets/song/adore-you.mp3" type="audio/mpeg">
 </audio>
 
-<main class="wrap">
-  <section class="intro" id="top">
-    <div class="reveal" data-delay="1">
-      <p class="eyebrow">Happy Birthday</p>
-      <h1>To the one who makes the ordinary feel like home.</h1>
-      <p class="opening-note">Some days you just want someone to look at you and see everything you are.</p>
-      <p class="opening-note">This page is yours. All of it.</p>
-    </div>
-    <div class="envelope reveal" data-delay="2">
-      <p class="envelope-label">&#128172; A letter, just for you</p>
-      <p class="envelope-copy">Open it when you're ready. There are things in here I never found the words to say out loud.</p>
-      <button class="btn" id="openLetter">Open the letter</button>
-    </div>
-  </section>
-  <nav class="wrap nav" aria-label="Multi-page navigation">
-    <a href="index.html" class="nav-brand">gift</a>
-    <ul class="nav-links">
-      <li><a href="index.html">Intro</a></li>
-      <li><a href="letter.html">Letter</a></li>
-      <li><a href="questions.html">Questions</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="videos.html">Videos</a></li>
-      <li><a href="song.html">Song</a></li>
-    </ul>
-  </nav>
-  <footer class="wrap footer">
-    <p>This page is private. Please don't share it.</p>
-    <p>Made with care - every photo, every note.</p>
-  </footer>
-</main>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 <script>
-(function () {
-  var loader = document.getElementById("loader");
-  var candles = document.getElementById("candles");
-  var overlay = document.getElementById("overlay");
-  var blowBtn = document.getElementById("blowBtn");
-  var sparklesEl = document.getElementById("sparkles");
-  var audio = document.getElementById("giftMusic");
+  (function () {
+    "use strict";
 
-  function buildSparkles() {
-    for (var i = 0; i < 30; i++) {
-      var s = document.createElement("span");
-      s.style.width = (Math.random() * 4 + 2) + "px";
-      s.style.height = s.style.width;
-      s.style.left = Math.random() * 100 + "%";
-      s.style.animationDuration = (Math.random() * 2.5 + 1.5) + "s";
-      s.style.animationDelay = (Math.random() * 3) + "s";
-      s.style.opacity = (Math.random() * 0.35 + 0.1);
-      sparklesEl.appendChild(s);
+    var loaderPage = document.getElementById("loaderPage");
+    var container = document.getElementById("lottieContainer");
+    var sparklesEl = document.getElementById("sparkles");
+    var overlay = document.getElementById("overlay");
+    var blowBtn = document.getElementById("blowBtn");
+    var audio = document.getElementById("giftMusic");
+
+    // Build sparkles
+    function buildSparkles() {
+      for (var i = 0; i < 40; i++) {
+        var s = document.createElement("span");
+        s.className = "slow";
+        if (i % 3 === 0) s.className += " big";
+        if (i % 5 === 0) s.className += " huge";
+        if (i % 4 === 0) s.className += " fast";
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = Math.random() * 100 + "%";
+        s.style.animationDuration = (Math.random() * 2.5 + 1.5) + "s";
+        s.style.animationDelay = (Math.random() * 4) + "s";
+        s.style.opacity = (Math.random() * 0.35 + 0.1);
+        sparklesEl.appendChild(s);
+      }
     }
-  }
-  buildSparkles();
+    buildSparkles();
 
-  audio.volume = 0.70;
-  audio.play().catch(function () {});
+    // Autoplay: music starts the moment the page opens, no click needed
+    audio.volume = 0.70;
+    audio.play().catch(function () {});
 
-  function onBegin() {
-    candles.classList.add("open");
-    overlay.classList.add("show");
-    setTimeout(function () {
-      window.location.hash = "top";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 700);
-  }
-  blowBtn.addEventListener("click", onBegin);
-  loader.addEventListener("click", onBegin);
-  loader.addEventListener("touchstart", function (e) { e.preventDefault(); onBegin(); });
-  document.addEventListener("keydown", function (e) {
-    if (e.key === " " || e.key === "Enter") { e.preventDefault(); onBegin(); }
-  });
-})();
+    // Load Lottie animation from local assets folder
+    function loadLottie() {
+      fetch('assets/loading.json')
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+          var animData = {
+            container: container,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            animationData: data
+          };
+          lottie.loadAnimation(animData);
+        })
+        .catch(function (err) {
+          // Fallback: try with require() (module context)
+          try {
+            var animDataMod = {
+              container: container,
+              renderer: "svg",
+              loop: true,
+              autoplay: true,
+              animationData: require('./assets/loading.json')
+            };
+            lottie.loadAnimation(animDataMod);
+          } catch (e2) {
+            // Last resort: try CDN fallback animation
+            console.warn("Lottie not loaded:", err);
+          }
+        });
+    }
+    loadLottie();
+
+    // Blow out the candles
+    function onBegin() {
+      var title = document.querySelector(".loader-page__title h1");
+      if (title) {
+        title.style.transition = "transform 0.15s";
+        title.style.transform = "scale(1.04)";
+        setTimeout(function () { title.style.transform = "scale(1)"; }, 150);
+      }
+      overlay.classList.add("show");
+      setTimeout(function () {
+        loaderPage.classList.add("hidden");
+        setTimeout(function () {
+          window.location.hash = "top";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 700);
+      }, 800);
+    }
+
+    blowBtn.addEventListener("click", onBegin);
+    loaderPage.addEventListener("click", onBegin);
+    loaderPage.addEventListener("touchstart", function (e) { e.preventDefault(); onBegin(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); onBegin(); }
+    });
+  })();
 </script>
 </body>
 </html>
