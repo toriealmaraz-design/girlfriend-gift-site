@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Song — Happy Birthday</title>
   <meta name="description" content="Your song, waiting." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
   <main class="wrap">
-
     <nav class="wrap nav" aria-label="Page navigation">
       <a href="index.html">&larr; Back to the intro</a>
     </nav>
 
-    <section class="page-head">
-      <p class="eyebrow">The Song</p>
-      <h1>The one I&rsquo;d play on repeat.</h1>
-      <p class="intro-sub">Whenever we&rsquo;re together, this is the first song I put on.</p>
+    <section class="intro">
+      <div class="reveal" data-delay="1">
+        <p class="eyebrow">The Song</p>
+        <h1>The one I&rsquo;d play on repeat.</h1>
+        <p class="intro-sub">Whenever we&rsquo;re together, this is the first song I put on.</p>
+      </div>
     </section>
 
     <div class="song-block wrap">
@@ -40,14 +40,33 @@
         </div>
         <p class="embed-hint">Direct link for sharing: <a href="https://www.youtube.com/watch?v=W1tzURKYFNs" target="_blank" rel="noopener">youtube.com/watch?v=W1tzURKYFNs</a></p>
       </div>
+
+      <div class="audio-block reveal" data-delay="3">
+        <p class="audio-label">&#9835; Direct audio</p>
+        <audio id="giftMusic2" preload="auto">
+          <source src="assets/song/adore-you.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <button class="btn" id="playSongBtn">&#9654; Play</button>
+        <p class="audio-hint">Also on the front page &mdash; starts automatically when the site opens.</p>
+      </div>
     </div>
 
     <footer class="wrap footer">
       <p>Your song will live here &mdash; private, just for you.</p>
     </footer>
-
   </main>
 
+  <script>
+    (function () {
+      "use strict";
+      var audio = document.getElementById("giftMusic2");
+      var btn = document.getElementById("playSongBtn");
+      if (btn) btn.addEventListener("click", function () { audio.play().catch(function () {}); });
+      // autoplay
+      audio.play().catch(function () {});
+    })();
+  </script>
   <script src="app.js"></script>
 </body>
 </html>
